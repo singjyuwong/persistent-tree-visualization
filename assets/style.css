@@ -134,11 +134,11 @@ input[type=number]:focus {
 }
 
 .zoom-in {
-  background: url('/persistent-bst/assets/zoom-in.svg') no-repeat;
+  background: url('zoom-in.svg') no-repeat;
 }
 
 .zoom-out {
-  background: url('/persistent-bst/assets/zoom-out.svg') no-repeat;
+  background: url('zoom-out.svg') no-repeat;
 }
 
 .zoom {

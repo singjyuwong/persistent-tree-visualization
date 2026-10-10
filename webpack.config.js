@@ -1,6 +1,7 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
@@ -9,7 +10,7 @@ module.exports = {
     filename: 'main.js',
     chunkFilename: '[name].js',
     path: path.resolve(__dirname, 'dist/'),
-    publicPath: path.resolve(__dirname, '/persistent-bst/'),
+    publicPath: 'auto',
   },
   devtool: 'source-map',
   module: {
@@ -70,16 +71,10 @@ module.exports = {
   devServer: {
     open: true,
     historyApiFallback: true,
-    static: [
-      {
-        directory: path.join(__dirname, 'assets'),
-        publicPath: '/persistent-bst/assets',
-      },
-      {
-        directory: path.join(__dirname, 'dist'),
-        publicPath: '/',
-      },
-    ],
+    static: {
+      directory: path.join(__dirname, 'dist'),
+      publicPath: '/',
+    },
     devMiddleware: {
         writeToDisk: true,
     },
@@ -99,6 +94,15 @@ module.exports = {
       filename: path.resolve(__dirname, 'dist/index.html'),
       template: path.resolve(__dirname, 'src/index.html'),
       inject: "body"
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'assets',
+          to: 'assets',
+          globOptions: { ignore: ['**/.DS_Store'] },
+        },
+      ],
     }),
   ],
 };
